@@ -2,10 +2,10 @@ from conexion import Conexion
 from cliente import Cliente
 class Cliente_Dao: 
     # Querys
-    SELECCIONAR = "SELECT * FROM cliente"
-    INSERTAR = "INSERT INTO cliente (nombre, apellido, membresia) VALUES (%s, %s, %s)"
-    ACTUALIZAR = "UPDATE cliente SET nombre=%s, apellido=%s, membresia=%s WHERE id=%s"
-    ELIMINAR = "DELETE FROM cliente WHERE id=%s"
+    SELECCIONAR = "SELECT * FROM persona"
+    INSERTAR = "INSERT INTO persona (nombre, apellido, membresia) VALUES (%s, %s, %s)"
+    ACTUALIZAR = "UPDATE persona SET nombre=%s, apellido=%s, membresia=%s WHERE id=%s"
+    ELIMINAR = "DELETE FROM persona WHERE id=%s"
 
     @classmethod 
     def seleccionar(cls):
@@ -81,7 +81,7 @@ class Cliente_Dao:
 
 if __name__ == "__main__":
     #Insertar Cliente
-    # cliente1 = Cliente(nombre="Josué", apellido="Perez", membresia=5)
+    # cliente1 = Cliente(nombre="Willt", apellido="Flores", membresia=500)
     # clientes_insertados = Cliente_Dao.insertar(cliente1)
     # print(f"Clientes Insertados: {clientes_insertados}")
     # Actualización 
@@ -89,10 +89,10 @@ if __name__ == "__main__":
     # clientes_actualizados = Cliente_Dao.actualizar(cliente_actualizar)
     # print(f"Clientes Actualizados: {cliente_actualizar}")
     #Eliminar Cliente 
-    cliente_eliminar = Cliente(id=5)
-    clientes_eliminados = Cliente_Dao.eliminar(cliente_eliminar)
-    print(f"Clientes Eliminados: {clientes_eliminados}")
+    # cliente_eliminar = Cliente(id=5)
+    # clientes_eliminados = Cliente_Dao.eliminar(cliente_eliminar)
+    # print(f"Clientes Eliminados: {clientes_eliminados}")
     # Seleccionar clientes 
-    # clientes = Cliente_Dao.seleccionar()
-    # for cliente in clientes:
-    #     print(cliente)
+    clientes = Cliente_Dao.seleccionar()
+    for cliente in clientes:
+        print(cliente)

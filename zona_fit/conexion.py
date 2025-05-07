@@ -3,9 +3,9 @@ from mysql.connector import Error
 class Conexion:
     DATABASE = "zona_fit_db"
     USERNAME = "root"
-    PASSWORD = ""
+    PASSWORD = "123456789"
     DB_PORT = "3306"
-    HOST = "localhost"
+    HOST = "127.0.0.1"
     POOL_SIZE = 5
     POOL_NAME = "zona_fit_pool"
     pool = None
