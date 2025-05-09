@@ -1,5 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter.messagebox import showerror, showinfo
+from cliente import Cliente
 from cliente_dao import Cliente_Dao
 
 class App(tk.Tk):
@@ -12,7 +14,7 @@ class App(tk.Tk):
         self.configurar_grid()
         self.mostrar_titulo()
         self.mostrar_formulario()
-        self.mostrar_tabla()
+        self.cargar_tabla()
         self.mostrar_botones()
 
     def configurar_ventana(self):
@@ -91,16 +93,51 @@ class App(tk.Tk):
         self.frame_b.grid(row=2, column=0, columnspan=2, padx=30, pady=40)
 
     def validar_cliente(self):
-        pass
+        #Validamos cada uno de los campos
+        if (self.nombre_t.get() and self.apellido_t.get() and self.membresia_t.get()):
+            if self.validar_membresia():
+                self.agregar_cliente()
+            else:
+                showerror(title='Atención', message='El valor de membresía no es númerico')
+                self.membresia_t.delete(0, tk.END)
+                self.membresia_t.focus_set()
+        else:
+            showerror(title='Atención', message='Todos los campos son obligatorios')
+            self.nombre_t.focus_set()
+
+    def validar_membresia(self):
+        try:
+            int(self.membresia_t.get())
+        except ValueError as e:
+            return False
+    def agregar_cliente(self):
+        # Recuperar los valores de las cajas de texto
+        nombre = self.nombre_t.get()
+        apellido = self.apellido_t.get()
+        membresia = self.membresia_t.get()
+        cliente = Cliente(nombre=nombre, apellido=apellido, membresia=membresia)
+        Cliente_Dao.insertar(cliente)
+        showinfo(title='Agregar', message='Cliente agregado correctamente...')
+        # Volemos a mostrar los datos
+        self.recarga_datos()
     
-    def eliminar_cliente(self):
-        pass
+    def recarga_datos(self):
+        self.cargar_tabla()
+        # limpiamos datos
+        self.limpiar_datos()
+    
+    
 
     def limpiar_datos(self):
-        pass
+        self.limpiar_formulario()
+    
+    def limpiar_formulario(self):
+        self.nombre_t.delete(0, tk.END)
+        self.apellido_t.delete(0, tk.END)
+        self.membresia_t.delete(0, tk.END)
 
     # Método para mostrar la tabla
-    def mostrar_tabla(self):
+    def cargar_tabla(self):
         self.frame_tabla = ttk.Frame(self)
         # Definimos los estilos de la tabla 
         self.estilos.configure("Treeview", 
@@ -145,7 +182,10 @@ class App(tk.Tk):
         # Mostramos el frame
         self.frame_tabla.grid(row=1, column=1,  padx=30)          
 
+    def eliminar_cliente(self):
+        pass
 
+    
 if __name__ == "__main__":
     app = App()
     app.mainloop()
